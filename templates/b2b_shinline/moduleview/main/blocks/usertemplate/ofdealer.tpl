@@ -1,6 +1,6 @@
 {if !empty($brands)}
     <div class="brandLine">
-        <div class="h2">{t}Мы является официальным дилером таких брендов как:{/t}</div>
+        {*<div class="h2">{t}Мы является официальным дилером таких брендов как:{/t}</div>*}
         <div class="wrapWidth">
 
             <div id="brandCarousel" class="carousel slide hidden-xs" data-interval="false" data-ride="carousel">

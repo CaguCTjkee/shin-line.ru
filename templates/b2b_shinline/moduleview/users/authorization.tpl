@@ -4,7 +4,7 @@
     <input type="hidden" name="referer" value="{$data.referer}">
     {hook name="users-authorization:form" title="{t}Авторизация:форма{/t}"}
         {if $url->request('dialogWrap', $smarty.const.TYPE_INTEGER)}
-            <h2 data-dialog-options='{ "width": "360" }'>Авторизация</h2>
+            <h2 data-dialog-options='{ "width": "300" }'>Авторизация</h2>
             <div class="dialogForm">
                 {if !empty($error)}<div class="error">{$error}</div>{/if}
                 <input type="text" name="login" value="{$data.login|default:$Setup.DEFAULT_DEMO_LOGIN}" class="login" placeholder="E-mail">

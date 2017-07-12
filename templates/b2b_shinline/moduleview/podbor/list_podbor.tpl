@@ -38,7 +38,7 @@
             <h4>Заводская комплектация</h4>
             <ul>
                 {foreach from=$zavod_diskov key=id item=var}
-                    <li><a href="/disk_catalog/all/size/{$zavod_diskov_param[$id].dr}x{$zavod_diskov_param[$id].et}/{$krepeg}x{$realpcd}/{$dia}/">{$var}</a></li>
+                    <li><a href="/disk_catalog/all/size/{$zavod_diskov_param[$id].dr}x*/{$krepeg}x{$realpcd}/{$dia}/">{$var}</a></li>
                 {/foreach}
             </ul>
         {/if}
@@ -47,7 +47,7 @@
             <h4>Варианты замены</h4>
             <ul>
                 {foreach from=$zamen_diskov key=id item=var}
-                    <li><a href="/disk_catalog/all/size/{$zamen_diskov_param[$id].dr}x{$zamen_diskov_param[$id].et}/{$krepeg}x{$realpcd}/{$dia}/">{$var}</a></li>
+                    <li><a href="/disk_catalog/all/size/{$zamen_diskov_param[$id].dr}x*/{$krepeg}x{$realpcd}/{$dia}/">{$var}</a></li>
                 {/foreach}
             </ul>
         {/if}
@@ -55,7 +55,7 @@
             <h4>Тюнинг</h4>
             <ul>
                 {foreach from=$tuning_diski key=id item=var}
-                    <li><a href="/disk_catalog/all/size/{$tuning_diski_param[$id].dr}x{$tuning_diski_param[$id].et}/{$krepeg}x{$realpcd}/{$dia}/">{$var}</a></li>
+                    <li><a href="/disk_catalog/all/size/{$tuning_diski_param[$id].dr}x*/{$krepeg}x{$realpcd}/{$dia}/">{$var}</a></li>
                 {/foreach}
             </ul>
         {/if}

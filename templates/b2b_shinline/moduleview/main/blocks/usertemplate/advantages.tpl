@@ -3,11 +3,11 @@
 <ul class="advantages-list clearfix">
     <li class="col-xs-12 col-sm-6 col-lg-3">
         <i class="sicon sicon-calendar"></i>
-        <span>20-ти летний опыт работы</span>
+        <span>Находимся в рынке с 2010 года</span>
     </li>
     <li class="col-xs-12 col-sm-6 col-lg-3">
         <i class="sicon sicon-assortiment"></i>
-        <span>Широкий ассортимент шин и дисков</span>
+        <span>Широкий ассортимент автошин и колесных дисков</span>
     </li>
     <li class="col-xs-12 col-sm-6 col-lg-3">
         <i class="sicon sicon-lider"></i>

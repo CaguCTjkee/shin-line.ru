@@ -14,31 +14,31 @@
 <form method="POST" action="{$router->getUrl('users-front-register')}">
     {$this_controller->myBlockIdInput()}
     <input type="hidden" name="referer" value="{$referer}">
-    <input type="hidden" name="is_company" value="{$user.is_company}">
+    <input type="hidden" name="is_company" value="1">
 
     {hook name="users-registers:form" title="{t}Регистрация:форма{/t}"}
         <div class="userProfile activeTabs" data-input-name="is_company">
-            <div class="formSection">
-                <span class="sectionListBlock">
-                    <ul class="lineList tabList">
-                        <li>
-                            <a class="item {if !$user.is_company}act{/if}" data-input-val="0" data-tab="#profile">
-                                <i class="fake-ratio"></i>
-                                частное лицо
-                            </a>
-                        </li>
-                        <li>
-                            <a class="item {if $user.is_company}act{/if}" data-class="thiscompany" data-input-val="1"
-                               data-tab="#profile">
-                                <i class="fake-ratio"></i>
-                                компания
-                            </a>
-                        </li>
-                    </ul>
-                </span>
-            </div>
+            {*<div class="formSection">*}
+                {*<span class="sectionListBlock">*}
+                    {*<ul class="lineList tabList">*}
+                        {*<li>*}
+                            {*<a class="item {if !$user.is_company}act{/if}" data-input-val="0" data-tab="#profile">*}
+                                {*<i class="fake-ratio"></i>*}
+                                {*частное лицо*}
+                            {*</a>*}
+                        {*</li>*}
+                        {*<li>*}
+                            {*<a class="item act" data-class="thiscompany" data-input-val="1"*}
+                               {*data-tab="#profile">*}
+                                {*<i class="fake-ratio"></i>*}
+                                {*компания*}
+                            {*</a>*}
+                        {*</li>*}
+                    {*</ul>*}
+                {*</span>*}
+            {*</div>*}
 
-            <table class="formTable tabFrame{if $user.is_company} thiscompany{/if}" id="profile">
+            <table class="formTable tabFrame thiscompany" id="profile">
                 <tbody class="organization">
                 <tr>
                     <td class="key">Название организации:</td>

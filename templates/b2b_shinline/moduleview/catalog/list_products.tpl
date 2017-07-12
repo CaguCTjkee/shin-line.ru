@@ -11,19 +11,15 @@
         {t}Не задан поисковый запрос{/t}
     </div>
 {else}
-    <div id="products" {if $shop_config}class="shopVersion"{/if}>
-        <div class="categoryDescription seo"><h1>{$category.name}</h1><hr>
-        {if $category.description}{descTopBottom($category.description)}{/if}
-        </div>
-        {hook name="catalog-list_products:options" title="{t}Просмотр категории продукции:параметры отображения{/t}"}
-        <div class="catalog__menu row">
-            <div class="sort__by col-xs-12 col-md-12 col-lg-5">
-                <div class="select__button">
+    {if count($list)}
+        <div class="col-xs-12 col-md-12 col-lg-5">
+            <div class="select__button">
 
-                    <label for="sort">{t}Сортировать по{/t}:</label>
+                <label for="sort">{t}Сортировать по{/t}:</label>
 
-                    <span class="dropdown">
-                        <button class="dropdown-toggle" type="button" id="sort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <span class="dropdown">
+                        <button class="dropdown-toggle" type="button" id="sort" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true">
                             {if $cur_sort=='dateof'}{t}по дате{/t}
                             {elseif $cur_sort=='rating'}{t}популярности{/t}
                             {elseif $cur_sort=='title'}{t}названию{/t}
@@ -33,124 +29,215 @@
                         </button>
                         <ul class="dropdown-menu list-sort" aria-labelledby="dropdownMenu1">
 
-                            <li {if $cur_sort=='cost'}class="active"{/if}><a href="{urlmake sort="cost" nsort=$sort.cost}" class="item{if $cur_sort=='cost'} {$cur_n}{/if}" rel="nofollow"><span>{t}цене{/t}</span></a></li>
-                            <li {if $cur_sort=='rating'}class="active"{/if}><a href="{urlmake sort="rating" nsort=$sort.rating}" class="item{if $cur_sort=='rating'} {$cur_n}{/if}" rel="nofollow"><span>{t}популярности{/t}</span></a></li>
-                            <li {if $cur_sort=='dateof'}class="active"{/if}><a href="{urlmake sort="dateof" nsort=$sort.dateof}" class="item{if $cur_sort=='dateof'} {$cur_n}{/if}" rel="nofollow"><span>{t}дате{/t}</span></a></li>
-                            <li {if $cur_sort=='num'}class="active"{/if}><a href="{urlmake sort="num" nsort=$sort.num}" class="item{if $cur_sort=='num'} {$cur_n}{/if}" rel="nofollow"><span>{t}наличию{/t}</span></a></li>
-                            <li {if $cur_sort=='title'}class="active"{/if}><a href="{urlmake sort="title" nsort=$sort.title}" class="item{if $cur_sort=='title'} {$cur_n}{/if}" rel="nofollow"><span>{t}названию{/t}</span></a></li>
-                                {if $can_rank_sort}
-                                <li {if $cur_sort=='rank'}class="active"{/if}><a href="{urlmake sort="rank" nsort=$sort.rank}" class="item{if $cur_sort=='rank'} {$cur_n}{/if}" rel="nofollow"><span>{t}релевантности{/t}</span></a></li>
-                                {/if}
+                            <li {if $cur_sort=='cost'}class="active"{/if}><a
+                                        href="{urlmake sort="cost" nsort=$sort.cost}"
+                                        class="item{if $cur_sort=='cost'} {$cur_n}{/if}"
+                                        rel="nofollow"><span>{t}цене{/t}</span></a></li>
+                            <li {if $cur_sort=='rating'}class="active"{/if}><a
+                                        href="{urlmake sort="rating" nsort=$sort.rating}"
+                                        class="item{if $cur_sort=='rating'} {$cur_n}{/if}"
+                                        rel="nofollow"><span>{t}популярности{/t}</span></a></li>
+                            <li {if $cur_sort=='dateof'}class="active"{/if}><a
+                                        href="{urlmake sort="dateof" nsort=$sort.dateof}"
+                                        class="item{if $cur_sort=='dateof'} {$cur_n}{/if}"
+                                        rel="nofollow"><span>{t}дате{/t}</span></a></li>
+                            <li {if $cur_sort=='num'}class="active"{/if}><a href="{urlmake sort="num" nsort=$sort.num}"
+                                                                            class="item{if $cur_sort=='num'} {$cur_n}{/if}"
+                                                                            rel="nofollow"><span>{t}наличию{/t}</span></a></li>
+                            <li {if $cur_sort=='title'}class="active"{/if}><a
+                                        href="{urlmake sort="title" nsort=$sort.title}"
+                                        class="item{if $cur_sort=='title'} {$cur_n}{/if}"
+                                        rel="nofollow"><span>{t}названию{/t}</span></a></li>
+                            {if $can_rank_sort}
+                                <li {if $cur_sort=='rank'}class="active"{/if}><a
+                                            href="{urlmake sort="rank" nsort=$sort.rank}"
+                                            class="item{if $cur_sort=='rank'} {$cur_n}{/if}"
+                                            rel="nofollow"><span>{t}релевантности{/t}</span></a></li>
+                            {/if}
                         </ul>
                     </span>
-                </div>
-            </div>
-            <div class="menu__mode hidden-xs hidden-sm col-md-3 col-lg-1 pull-right">
-                <a href="{urlmake viewAs=table}" class="menu__mode-left viewAs {if $view_as == 'table'} act{/if}" rel="nofollow"></a>
-                <a href="{urlmake viewAs=blocks}" class="menu__mode-right viewAs {if $view_as == 'blocks'} act{/if}" rel="nofollow"></a>
             </div>
         </div>
-        {/hook}
+        <table class="table table-striped table-products">
+            <thead>
+            <tr class="info">
+                <td>Фото</td>
+                <td>Код</td>
+                <td>Название</td>
+                <td>Остаток</td>
+                <td>Срок доставки</td>
+                <td>
+                    {if $podbor.podbor == 'tire'}
+                        Сезон
+                    {elseif $podbor.podbor == 'truck'}
+                        <span data-toggle="tooltip" data-placement="top" title="Применяемость">Прим.</span>
+                    {else}
+                        Тип
+                    {/if}
+                </td>
+                <td>Цена</td>
+                <td>Кол-во</td>
+                <td>Корзина</td>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $product}
+                {$main_image=$product->getMainImage()}
+                {$product_type=$product->getPropertyValueByTitle('Тип товара')}
+                {$thorns=$product->getPropertyValueByTitle('Шип')}
+                {assign var=warehouse_stock value=$product->getWarehouseFullStock()}
+                {assign var=stick_info value=$product->getWarehouseStickInfo()}
 
-        {if count($list)}
-            <div class="product__block">
-                {if $view_as == 'blocks'}
-                    {foreach $list as $product}
-                        {$main_image=$product->getMainImage()}
-                        {$product_type=$product->getPropertyValueByTitle('Тип товара')}
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                            <div class="tyre_block catalog__tyre_block row {if $product->isOffersUse() || $product->isMultiOffersUse()} showOfferSelect{/if}" {$product->getDebugAttributes()} data-id="{$product.id}">
-                                {foreach $product->getMySpecDir() as $spec}
-                                    {if $spec.image}
-                                        <img src="{$spec->__image->getUrl()}" alt=""/>
+                {if $warehouse_stock[11] > 0}
+                    {assign var=delivery_days value='1'}
+                    {assign var=delivery_days_text value='день'}
+                {else}
+                    {assign var=day_of_week value=$smarty.now|date_format:"%u"}
+                    {if $day_of_week == 1}
+                        {assign var=delivery_days value=7}
+                        {assign var=delivery_days_text value='дней'}
+                    {elseif $day_of_week == 2}
+                        {assign var=delivery_days value=6}
+                        {assign var=delivery_days_text value='дней'}
+                    {elseif $day_of_week == 3}
+                        {assign var=delivery_days value=5}
+                        {assign var=delivery_days_text value='дней'}
+                    {elseif $day_of_week == 4}
+                        {assign var=delivery_days value=4}
+                        {assign var=delivery_days_text value='дня'}
+                    {elseif $day_of_week == 5}
+                        {assign var=delivery_days value=3}
+                        {assign var=delivery_days_text value='дня'}
+                    {elseif $day_of_week == 6}
+                        {assign var=delivery_days value=2}
+                        {assign var=delivery_days_text value='дня'}
+                    {else}
+                        {assign var=delivery_days value=1}
+                        {assign var=delivery_days_text value='день'}
+                    {/if}
+                {/if}
+
+                {assign var=warehouses_info value=''}
+                {foreach $stick_info.warehouses as $warehous}
+                    {if $warehouse_stock[$warehous.id] > 0 }
+                        {if $warehouse_stock[$warehous.id] > 30}
+                            {assign var=warehouse_stock_count value='более 30'}
+                        {else}
+                            {assign var=warehouse_stock_count value=$warehouse_stock[$warehous.id]}
+                        {/if}
+
+                        {assign var=warehouses_info value=$warehouses_info|cat:$warehous.title|cat:' - '|cat:$warehouse_stock_count|cat:' шт.<br>'}
+                    {/if}
+                {/foreach}
+
+                {if $product@first}
+                    {*{$stick_info|var_dump}*}
+                {/if}
+                <tr class="clearfix {if $thorns|trim == 'да'}thorns{/if}" data-id="{$product.id}">
+                    <td class="main-image">
+                        <a href="{$product->getUrl()}">
+                            <img src="{$main_image->getUrl(250, 270, 'xy')}" class="middlePreview"
+                                 alt="{$main_image.title|default:"{$product.title}"}"/>
+                        </a>
+                    </td>
+                    <td class="product-barcode">
+                        <span class="visible-xs-inline">Код: </span>
+                        {$product.id}
+                    </td>
+                    <td class="product-title clearfix">
+                        <a href="{$product->getUrl()}">
+                            {$product.title}
+                        </a>
+                    </td>
+                    <td class="product-num">
+                        <span class="visible-xs-inline">Остаток: </span>
+                        {if $product.num > 0}
+                            <span class="text-success" data-toggle="tooltip" data-html="true" data-placement="top"
+                                  title="{$warehouses_info}">
+                                <i class="int hidden">{$product.num}</i>
+
+                                {assign var=maykop value=$warehouse_stock[15]+$warehouse_stock[16]}
+                                {if $warehouse_stock[11] > 0}
+                                    {if $warehouse_stock[11] > 30}
+                                        более 30
+                                    {else}
+                                        {$warehouse_stock[11]}
                                     {/if}
-                                {/foreach}
+                                {/if}
+                                {if $warehouse_stock[11] > 0 && $maykop > 0}
+                                    +
+                                {/if}
+                                {if $maykop > 0}
+                                    {if $maykop > 30}
+                                        более 30
+                                    {else}
+                                        {$maykop}
+                                    {/if}
+                                {/if}
+                                шт
+                            </span>
+                        {else}
+                            <span class="text-danger">нет в наличии</span>
+                        {/if}
+                    </td>
+                    <td class="product-delivery">
+                        {if $product.num > 0}
+                            <span class="visible-xs-inline">Срок доставки: <i class="sicon sicon-info"
+                                                                              data-toggle="tooltip" data-placement="top"
+                                                                              title="{$delivery_days} {$delivery_days_text} до склада Краснодар"></i></span>
+                            <span class="hidden-xs" data-toggle="tooltip" data-placement="top"
+                                  title="{$delivery_days} {$delivery_days_text} до склада Краснодар">{$delivery_days} {$delivery_days_text}</span>
+                        {else}
+                            <span class="text-danger">-</span>
+                        {/if}
+                    </td>
+                    <td class="product-season">
+                        <span class="visible-xs-inline">
+                            {if $podbor.podbor == 'tire' && $product_type != 'Сельхозшина'}
+                            Сезон
+                            {elseif $podbor.podbor == 'truck'}
+                            Применяемость
+                            {else}
+                            Тип
+                            {/if}:
+                        </span>
+                        {if $product_type == 'Летняя шина'}
+                            <i class="sicon sicon-sun" data-toggle="tooltip" data-placement="top" title="Лето"></i>
+                        {elseif $product_type == 'Зимняя шина'}
+                            <i class="sicon sicon-snow" data-toggle="tooltip" data-placement="top" title="Зима"></i>
+                        {elseif $product_type == 'Грузовая шина'}
+                            {$product->getPropertyValueByTitle('Применяемость грузового колеса')}
+                        {else}
+                            {$product_type}
+                        {/if}
+                    </td>
+                    <td class="product-cost">
+                        {$product->getCost()} {$product->getCurrency()}
+                    </td>
+                    <td class="product-count">
+                        <div class="amount-pick {if $product.num == 0}disabled{/if}">
+                            <input type="hidden" name="amount" class="field-amount"
+                                   value="{if $product.num > 4}5{else}{$product.num}{/if}">
+                            <div class="amount-quick-pick">
+                                <button type="button" class="btn btn-primary dec-pick">-</button>
+                                <span class="text-amount">
+                                    <i class="int">{if $product.num > 4}5{else}{$product.num}{/if}</i> шт
                                 </span>
-                                <span class="labels tyre__new">
-                                    {foreach $product->getMySpecDir() as $spec}
-                                        {if $spec.image}
-                                            <img src="{$spec->__image->getUrl()}" alt=""/>
-                                        {/if}
-                                    {/foreach}
-                                </span>
-                                <div class="catalog__tyre__pic">
-                                    <a href="{$product->getUrl()}"><img src="{$main_image->getUrl(250, 270, 'xy')}" class="middlePreview" alt="{$main_image.title|default:"{$product.title}"}"/></a>
-                                </div>
-                                <div class="catalog__tyre__description">
-                                    <div class="tyre__name"><a href="{$product->getUrl()}"><span style="font-weight: bold;">{$product.title}</span></a></div>
-                                    <span class="{if $product_type == 'Летняя шина'}summer__tyres{elseif $product_type == 'Зимняя шина'}winter__tyres{/if} season_of_tyre">{$product_type}</span>
-                                    <span class="catalog__price__actual">{$product->getCost()} {$product->getCurrency()}</span>
-                                    <div class="form_submit-block">
-                                        <span class="in__stock hidden-xs hidden-sm">
-                                            {if $product.num == 0}
-                                                <div class="count">Под заказ</div>
-                                            {else if $product.num > 4}
-                                                <div class="count">В наличии</div>
-                                            {else}
-                                                <div class="count">Количество: {$product.num}</div>
-                                            {/if}
-                                        </span>
-                                        <a href="{$product->getUrl()}" class="buy-button">Купить</a>
-                                    </div>
-                                </div>
+                                <button type="button" class="btn btn-primary inc-pick">+</button>
                             </div>
                         </div>
-                    {/foreach}
-                {else}
-                    {foreach $list as $product}
-                        {$main_image=$product->getMainImage()}
-                        {$product_type=$product->getPropertyValueByTitle('Тип товара')}
-                        {$product_runflat=$product->getPropertyValueByTitle('RunFlat')}
-                        <div class="no-padding-horisontal col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="tyre_block viewAs-table catalog__tyre_block row {if $product->isOffersUse() || $product->isMultiOffersUse()} showOfferSelect{/if}" {$product->getDebugAttributes()} data-id="{$product.id}">
-                                <span class="labels tyre__new">
-                                    {foreach $product->getMySpecDir() as $spec}
-                                        {if $spec.image}
-                                            <img src="{$spec->__image->getUrl()}" alt=""/>
-                                        {/if}
-                                    {/foreach}
-                                </span>
-                                <div class="catalog1__tyre__pic col-xs-12 col-md-4 col-lg-3">
-                                    <a href="{$product->getUrl()}"><img src="{$main_image->getUrl(250, 270, 'xy')}" class="middlePreview" alt="{$main_image.title|default:"{$product.title}"}"/></a>
-                                </div>
-                                <div class="catalog1__tyre__description col-xs-12 col-md-8 col-lg-9">
-                                    <div class="tyre__name"><a href="{$product->getUrl()}"><span style="font-weight: bold;">{$product.title}</span></a></div>
-                                    <span class="{if $product_type == 'Летняя шина'}summer__tyres{elseif $product_type == 'Зимняя шина'}winter__tyres{/if} season_of_tyre">{$product_type}</span>
-                                    {if $product_runflat != ''}
-                                        <div class="tyre__runflat"><img src="{$THEME_IMG}/icon-runflat.png" alt=""></div>
-                                    {/if}
-                                    <div class="price__block">
-                                        <span class="catalog1__price__actual">{$product->getCost()} {$product->getCurrency()}</span>
-                                    </div>
-                                    <div class="form_submit-block1">
-                                        <a href="{$product->getUrl()}" class="buy-button">Купить</a>
-                                        <span class="in__stock1 hidden-xs hidden-sm">
-                                            {if $product.num == 0}
-                                                <div class="count">Под заказ</div>
-                                            {else if $product.num > 4}
-                                                <div class="count">В наличии</div>
-                                            {else}
-                                                <div class="count">Количество: {$product.num}</div>
-                                            {/if}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {/foreach}
-                {/if}
-            </div>
-            <div class="clearfix"></div>
-            {include file="%THEME%/paginator.tpl"}
-        {else}
-            <div class="noProducts error">
-                {if !empty($query)}
-                    {t}Извините, ничего не найдено{/t}
-                {else}
-                    {t}В данной категории нет ни одного товара{/t}
-                {/if}
-            </div>
-        {/if}
-    </div>
-    {if $category.description}<div class="categoryDescription seo">{descTopBottom($category.description, true)}</div>{/if}
+                    </td>
+                    <td class="product-cart">
+                        <a data-href="{$router->getUrl('shop-front-cartpage', ["add" => $product.id])}"
+                           class="{if $product.num > 0}addToCart noShowCart{/if} {if $product.num == 0}disabled{/if}">
+                            <i class="sicon sicon-cart"></i>
+                        </a>
+                    </td>
+                </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    {else}
+        <div class="alert alert-danger">Товары не найдены</div>
+    {/if}
 {/if}

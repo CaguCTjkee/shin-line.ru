@@ -282,7 +282,7 @@
             {/if}
 
             {if count($address_list)>0}
-                <div class="existsAddress hidden">
+                <div class="existsAddress">
                     Использовать следующий адрес:
                     <table id="address-list">
                         {foreach from=$address_list item=address}

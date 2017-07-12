@@ -363,6 +363,8 @@ $.extend({
                 return false;
             }
 
+                console.log(url);
+
             return methods['add'].call(this, url, offerValue, multioffersValues, concomitantValues, amount, noShowCart);
         },
                 /**
@@ -635,8 +637,9 @@ $.fn.extend({
 
             //private
             var onClick = function () {
-                if( $.detectMedia && $.detectMedia('mobile') )
-                    return true; //Не открываем окна в мобильной версии
+                // if( $.detectMedia && $.detectMedia('mobile') )
+                //     return true; //Не открываем окна в мобильной версии
+                // Comment by CaguCT
 
                 $.openDialog({
                     url: $(this).data('href') ? $(this).data('href') : $(this).attr('href')

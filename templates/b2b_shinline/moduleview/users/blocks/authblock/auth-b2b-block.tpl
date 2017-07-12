@@ -28,7 +28,8 @@
                 </div>
                 <div class="buttons">
                     <button type="submit" class="btn btn-primary btn-block">Войти</button>
-                    <a href="#" class="btn btn-link">Зарегистрироваться</a>
+                    <a href="{$router->getUrl('users-front-register', ['referer' => $referer])}"
+                       class="btn btn-link inDialog">Зарегистрироваться</a>
                 </div>
             </form>
         </div>
